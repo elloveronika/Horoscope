@@ -1,0 +1,14 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    background-color: #58B19F;
+}
+article, div{
+    display: flex;
+    justify-content: center;
+
+}
+button{
+    background-color: #FD7272;
+}

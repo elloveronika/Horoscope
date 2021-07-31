@@ -1,44 +1,143 @@
 
-document.querySelector('button').addEventListener('click', getYourSign)
+document.querySelector('button').addEventListener('click', clickHandler)
 
-let months = ['january','february', 'march', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
-let days = [1,2,3,4,5,6,7,8,9,20,21,22,23,24,25,26,27,28,29,30,31]
 
-function getYourSign(){
-    let month = document.querySelector('input').value.toLowerCase()
-    let date =  Number(document.querySelector('select').value)
-    let find = months.indexOf(month)
-    if(find === 0){
-        console.log('you are a capricorn ')
-    }
-    // if(find){
-    //     console.log(month)
-    // }
-    // if((month === 'march' && date >= 21) || (month === 'april' && date <= 19)){
-    //     console.log('Hey youre a Aries, you are gonna have an awesome day month and life ')
-    // }else if((month === 'april' && date >= 20) || (month === 'may' && date <= 20)){
-    //     console.log('Hey youre a Taurus, you are gonna have an awesome day month and life ')
-    // }else if((month === 'may' && date >= 21) || (month === 'june' && date <= 19)){
-    //     console.log('Hey youre a Gemini, you are gonna have an awesome day month and life ')
-    // }else if((month === 'june' && date >= 21) || (month === 'july' && date <= 22)){
-    //     console.log('Hey youre a Cancer, you are gonna have an awesome day month and life ')
-    // }else if((month === 'july' && date >= 23) || (month === 'august' && date <= 22)){
-    //     console.log('Hey youre a Leo, you are gonna have an awesome day month and life ')
-    // }else if((month === 'august' && date >= 23) || (month === 'september' && date <= 19)){
-    //     console.log('Hey youre a Virgo, you are gonna have an awesome day month and life ')
-    // }else if((month === 'september' && date >= 23) || (month === 'october' && date <= 22)){
-    //     console.log('Hey youre a Libra, you are gonna have an awesome day month and life ')
-    // }else if((month === 'october' && date >= 23) || (month === 'november' && date <= 21)){
-    //     console.log('Hey youre a Scorpio, you are gonna have an awesome day month and life ')
-    // }else if((month === 'november' && date >= 22) || (month === 'december' && date <= 21)){
-    //     console.log('Hey youre a Sag, you are gonna have an awesome day month and life ')
-    // }else if((month === 'december' && date >= 22) || (month === 'january' && date <= 19)){
-    //     console.log('Hey youre a Capricorn, you are gonna have an awesome day month and life ')
-    // }else if((month === 'january' && date >= 20) || (month === 'february' && date <= 18)){
-    //     console.log('Hey youre a Aquarius, you are gonna have an awesome day month and life ')
-    // }else if((month === 'february' && date >= 19) || (month === 'march' && date <= 30)){
-    //     console.log('Hey youre a Pisces, you are gonna have an awesome day month and life ')
-    // }
+function clickHandler(){
+    getSignData(getYourSign())
+}
+
+function getSignData(sign){
+    const URL = `https://aztro.sameerkumar.website/?sign=${sign}&day=today`;
+    fetch(URL, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(json => {
+        console.log(json);
+        document.querySelector('#sign').innerText = `Your sign: ${sign}`;
+        document.querySelector('#message').innerText = json.description;
+        document.querySelector('#num').innerText = `Your lucky number: ${json.lucky_number}`;
+
+    });
+
 }
 
 
+function getYourSign(){
+    const userMonth = document.querySelector('input').value.toLowerCase()
+    const userDay  =  Number(document.querySelector('select').value)
+
+    
+    let myArray = [
+        {
+            sign: 'Aries',
+            startMonth: 'march',
+            startDay: 21,
+            endMonth: 'april',
+            endDay: 19,
+            message: "this is a good day" 
+        }, 
+        {
+            sign: 'Taurus',
+            startMonth: 'april',
+            startDay: 20,
+            endMonth: 'may',
+            endDay: 20,
+       
+        }, 
+        {
+            sign: 'Gemini',
+            startMonth: 'may',
+            startDay: 21,
+            endMonth: 'june',
+            endDay: 19,
+  
+        }, 
+        {
+            sign: 'Cancer',
+            startMonth: 'june',
+            startDay: '21',
+            endMonth: 'july',
+            endDay: 22,
+  
+        }, 
+        {
+            sign: 'Leo',
+            startMonth: 'july',
+            startDay: 23,
+            endMonth: 'august',
+            endDay: 22,
+ 
+        }, 
+        {
+            sign: 'Virgo',
+            startMonth: 'august',
+            startDay: 23,
+            endMonth: 'september',
+            endDay: 19,
+
+        }, 
+        {
+            sign: 'Libra',
+            startMonth: 'september',
+            startDay: 23,
+            endMonth: 'october',
+            endDay: 22,
+      
+        }, 
+        {
+            sign: 'Scorpio',
+            startMonth: 'october',
+            startDay: 23,
+            endMonth: 'november',
+            endDay: 21,
+  
+        }, 
+        {
+            sign: 'Sagittarius',
+            startMonth: 'november',
+            startDay: 22,
+            endMonth: 'december',
+            endDay: 21,
+
+        }, 
+        {
+            sign: 'Capricorn',
+            startMonth: 'december',
+            startDay: 22,
+            endMonth: 'january',
+            endDay: 19,
+
+        }, 
+        {
+            sign: 'Aquarius',
+            startMonth: 'january',
+            startDay: 20,
+            endMonth: 'february',
+            endDay: 18,
+
+        }, 
+        {
+            sign: 'Pisces',
+            startMonth: 'february',
+            startDay: 19,
+            endMonth: 'march',
+            endDay: 20,
+    
+        }, 
+    ]
+
+    const mySign = myArray.find(element => (element.startMonth === userMonth && userDay >= element.startDay )|| (element.endMonth === userMonth && userDay <= element.endDay))
+
+    // document.getElementById('sign').innerText = `${mySign.sign}`
+    return mySign.sign
+
+}
+// getSignData(getYourSign())
+
+// getYourSign();
+
+// const mySign = myArray.find(element => 
+//     element.startMonth === userMonth && element.startDay <= userDay  || 
+//     element.endMonth === userMonth && element.endDay >= userDay
+// )

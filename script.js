@@ -8,17 +8,30 @@ function clickHandler(){
 
 function getSignData(sign){
     const URL = `https://aztro.sameerkumar.website/?sign=${sign}&day=today`;
-    fetch(URL, {
-        method: 'POST'
+    fetch(URL, { //fetch is a browser api, does not work in node(like the browser just diff functionality) /fetch is an http request api (creating an http and then wraps the request in a promise)
+        method: 'POST' //
     })
-    .then(response => response.json())
-    .then(json => {
-        console.log(json);
+    .then(response => response.json())//collects response from the fetch
+    .then(data => {//recieving data thats been converted from json
+        console.log(data);
         document.querySelector('#sign').innerText = `Your sign: ${sign}`;
-        document.querySelector('#message').innerText = json.description;
-        document.querySelector('#num').innerText = `Your lucky number: ${json.lucky_number}`;
+        document.querySelector('#message').innerText = data.description;
+        document.querySelector('#num').innerText = `Your lucky number: ${data.lucky_number}`;
 
     });
+
+}
+
+async function asyncGetSignData(sign){
+    const URL = `https://aztro.sameerkumar.website/?sign=${sign}&day=today`;
+    const res = await fetch(URL, { //fetch is a browser api, does not work in node(like the browser just diff functionality) /fetch is an http request api (creating an http and then wraps the request in a promise)
+        method: 'POST' //fetch is asynchronous bc its a Promise
+    });
+    const data = await res.json()//collects response from the fetch
+    console.log(data);
+    document.querySelector('#sign').innerText = `Your sign: ${sign}`;
+    document.querySelector('#message').innerText = data.description;
+    document.querySelector('#num').innerText = `Your lucky number: ${data.lucky_number}`;
 
 }
 

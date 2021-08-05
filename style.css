@@ -32,5 +32,10 @@ button{
  .sec > section{
     height: 100px;
 
+
 }
- 
+img{
+   object-fit: contain;
+   width: 450px;
+   height: auto;
+} 
